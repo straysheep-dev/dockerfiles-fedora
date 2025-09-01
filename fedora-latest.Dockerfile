@@ -26,8 +26,14 @@ RUN dnf -y install systemd && dnf clean all && \
     rm -f /lib/systemd/system/anaconda.target.wants/*;
 
 # Install packages
+# Including python3-rpm resolves issues with package_facts enumeration, even though libdnf5
+# allows Ansible to work with dnf5. dnf and dnf5 are aliases to rpm for the package_facts
+# module, which points to the python3-rpm library for the required RPM bindings.
+# - https://docs.ansible.com/ansible/latest/collections/ansible/builtin/package_facts_module.html#parameter-manager
+# - https://github.com/ansible/ansible/issues/84834
 RUN dnf -y install \
     python3-pip \
+    python3-rpm \
     sudo \
     which \
     python3-libdnf5 \
