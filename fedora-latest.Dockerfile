@@ -10,7 +10,7 @@
 FROM fedora:latest
 
 # Tells components like systemd they're running in Docker
-ENV container docker
+ENV container=docker
 
 RUN dnf -y update && dnf clean all
 
